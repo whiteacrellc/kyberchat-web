@@ -1,30 +1,51 @@
-# Use nginx alpine image for lightweight deployment
-FROM nginx:alpine
+# Use PHP-FPM Alpine as the base for PHP support
+FROM php:8.2-fpm-alpine
 
-# Copy static files to nginx html directory
-COPY index.html /usr/share/nginx/html/
-COPY privacy_policy.html /usr/share/nginx/html/
-COPY styles.css /usr/share/nginx/html/
-COPY kyberchat_logo.png /usr/share/nginx/html/
-COPY favicon.ico /usr/share/nginx/html/
+# Install Nginx
+RUN apk add --no-cache nginx
 
-# Create nginx configuration for Cloud Run
+# Install PHP mysqli extension for database connectivity
+RUN docker-php-ext-install mysqli
+
+# Create the directory for Nginx run files
+RUN mkdir -p /run/nginx
+
+# Set the working directory
+WORKDIR /var/www/html
+
+# Copy all website files to the container
+COPY index.html .
+COPY about.html .
+COPY privacy_policy.html .
+COPY support.html .
+COPY submit_support.php .
+COPY styles.css .
+COPY kyberchat_logo.png .
+COPY favicon.ico .
+
+# Create Nginx configuration to support PHP and Cloud Run (port 8080)
 RUN echo 'server { \
     listen 8080; \
     server_name localhost; \
+    root /var/www/html; \
+    index index.html index.php; \
     location / { \
-        root /usr/share/nginx/html; \
-        index index.html; \
         try_files $uri $uri/ /index.html; \
+    } \
+    location ~ \.php$ { \
+        fastcgi_pass 127.0.0.1:9000; \
+        fastcgi_index index.php; \
+        include fastcgi_params; \
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; \
     } \
     # Security headers \
     add_header X-Frame-Options DENY; \
     add_header X-Content-Type-Options nosniff; \
     add_header X-XSS-Protection "1; mode=block"; \
-}' > /etc/nginx/conf.d/default.conf
+}' > /etc/nginx/http.d/default.conf
 
 # Expose port 8080 (required for Cloud Run)
 EXPOSE 8080
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start PHP-FPM in the background and Nginx in the foreground
+CMD php-fpm -D && nginx -g "daemon off;"

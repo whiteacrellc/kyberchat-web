@@ -112,3 +112,4 @@ fastlane/test_output
 .dir-locals-2.el
 
 .DS-Store
+cloudbuild.yaml

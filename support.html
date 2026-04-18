@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support & Disclaimer - KyberChat</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        .btn-submit {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-submit:hover {
+            background-color: #004494;
+        }
+    </style>
+</head>
+<body class="policy-page">
+
+    <div class="container">
+        <a href="index.html" class="nav-link">&larr; Back to Home</a>
+        
+        <div class="page-header">
+            <img src="kyberchat_logo.png" alt="KyberChat Logo" class="logo">
+            <h1>Support & Disclaimer</h1>
+        </div>
+
+        <section>
+            <h2>Open Source Product</h2>
+            <p>KyberChat is proud to be an open source product. We believe in transparency and community, which is why our source code is freely available for review and contribution.</p>
+        </section>
+
+        <section>
+            <h2>Legal Disclaimer</h2>
+            <p><strong>Liability Disclaimer:</strong> By using KyberChat, you agree that you cannot hold WhiteAcre LLC liable for any issues, damages, or losses that come from using the app. The software is provided "as is", without any warranties or guarantees of any kind. Use at your own risk.</p>
+        </section>
+
+        <section>
+            <h2>Support & Feature Requests</h2>
+            <p>Need help or have an idea for a new feature? Fill out the form below, and our team will look into it.</p>
+            <form action="submit_support.php" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Request Type</label>
+                    <select id="type" name="type" required>
+                        <option value="support">Support</option>
+                        <option value="feature">Feature Request</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </section>
+        
+        <footer style="margin-top: 40px; text-align: center; font-size: 0.9em; color: #666;">
+            <p>&copy; 2026 WhiteAcre Software LLC. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
